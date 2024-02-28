@@ -91,7 +91,7 @@ export const getRecipesByCuisine = async (cuisine: string, offset) => {
     }
 }
 
-export const getRecipeDetail = async(id: string) => {
+export const getRecipeDetail = async(id: string | string[]) => {
     try {
         const recipe = await axios.get(`${baseUrl}/${id}/information?apiKey=${process.env.NEXT_PUBLIC_spoonacularApiKey1}&includeNutrition=true`)
         return recipe.data
