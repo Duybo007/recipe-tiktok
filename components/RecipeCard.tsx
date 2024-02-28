@@ -11,7 +11,7 @@ function RecipeCard({ recipe, index }: any) {
   const { user, setStatecurrentViewing, setStateSavedRecipes } = useAuth();
   const { ref, inView } = useInView();
 
-  const [recipeDetail, setRecipeDetail] = useState();
+  const [recipeDetail, setRecipeDetail] = useState<any>();
   const [savedRecipe, setSavedRecipes] = useState([]);
   const [saved, setSaved] = useState(false);
 
