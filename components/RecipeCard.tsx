@@ -154,7 +154,7 @@ function RecipeCard({ recipe, index }: any) {
             }}
             className="w-[45%] text-center rounded-xl font-semibold py-1 bg-primary"
           >
-            Let's Cook
+            Let&apos;s Cook
           </Link>
         </div>
       </div>

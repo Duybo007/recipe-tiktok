@@ -23,7 +23,7 @@ function Search() {
       <div className=" bg-black">
         <div className="flex gap-2 items-center">
           <FaHeart className="text-white" />
-          <div className="text-white text-xl font-semibold">Let's Cook</div>
+          <div className="text-white text-xl font-semibold">Let&apos;s Cook</div>
         </div>
         <div className="flex items-center pl-3 bg-light-gray rounded-full mt-3 border-2 border-black">
           <FaSearch className="text-white " />
