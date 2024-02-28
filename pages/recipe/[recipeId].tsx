@@ -5,8 +5,17 @@ import React, { useEffect, useState } from "react";
 import { getRecipeDetail } from "@/services/RecipeService";
 
 function RecipeDetail() {
+  let imageUrl: string = '';
   const router = useRouter();
   const data = router.query;
+
+  if (Array.isArray(data.image)) {
+    // If data.image is an array, join its elements into a single string
+    imageUrl = data.image.join(',');
+  } else {
+    // If data.image is not an array, use it directly
+    imageUrl = data.image || ''; // Ensure imageUrl is always a string
+  }
 
   //to toggle ingredient availability
   let InitialIngredientsState = [];
@@ -60,7 +69,7 @@ function RecipeDetail() {
     <div className="text-white p-4 min-h-screen">
       <h1 className="text-2xl font-semibold">{data.title}</h1>
       <div>
-        <img className="rounded-3xl mt-5" src={data.image} alt="" />
+        <img className="rounded-3xl mt-5" src={imageUrl} alt="" />
       </div>
 
       <div className="border-b border-gray-200 dark:border-gray-700">
