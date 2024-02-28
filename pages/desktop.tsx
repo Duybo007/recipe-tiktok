@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { isMobile } from "react-device-detect";
 
-function desktop() {
+function Desktop() {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
 
@@ -25,4 +25,4 @@ function desktop() {
   );
 }
 
-export default desktop;
+export default Desktop;

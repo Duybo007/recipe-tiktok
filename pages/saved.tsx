@@ -25,7 +25,7 @@ function useDebounceSearchTerm(value, time = 500) {
   return debounceSearchTerm;
 }
 
-function saved() {
+function Saved() {
   const { user } = useAuth();
   const [savedRecipes, setSavedRecipes] = useState([]);
   const [savedRecipesFilter, setSavedRecipesFilter] = useState([]);
@@ -101,4 +101,4 @@ function saved() {
   );
 }
 
-export default saved;
+export default Saved;

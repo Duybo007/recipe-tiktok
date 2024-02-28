@@ -2,7 +2,7 @@ import { cuisines } from "@/constants/cuisines";
 import { useAuth } from "@/context/AuthContext";
 import React, { useState } from "react";
 
-function profile() {
+function Profile() {
   const { setStateCuisine, cuisine, setStatecurrentViewing } = useAuth();
   const [selectCuisine, setSelectCuisine] = useState(cuisine);
 
@@ -33,4 +33,4 @@ function profile() {
   );
 }
 
-export default profile;
+export default Profile;

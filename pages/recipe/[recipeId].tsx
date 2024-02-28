@@ -4,7 +4,7 @@ import { GiKnifeFork } from "react-icons/gi";
 import React, { useEffect, useState } from "react";
 import { getRecipeDetail } from "@/services/RecipeService";
 
-function recipeDetail() {
+function RecipeDetail() {
   const router = useRouter();
   const data = router.query;
 
@@ -126,4 +126,4 @@ function recipeDetail() {
   );
 }
 
-export default recipeDetail;
+export default RecipeDetail;

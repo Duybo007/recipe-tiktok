@@ -6,7 +6,7 @@ import { arrayUnion, doc, updateDoc } from "firebase/firestore";
 import { useState } from "react";
 import { FaHeart, FaSearch } from "react-icons/fa";
 
-function search() {
+function Search() {
   const [searchTerm, setSearchTerm] = useState("");
   const [recipes, setRecipes] = useState([]);
 
@@ -49,4 +49,4 @@ function search() {
   );
 }
 
-export default search;
+export default Search;
