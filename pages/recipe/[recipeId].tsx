@@ -3,18 +3,21 @@ import { MdLocalGroceryStore } from "react-icons/md";
 import { GiKnifeFork } from "react-icons/gi";
 import React, { useEffect, useState } from "react";
 import { getRecipeDetail } from "@/services/RecipeService";
+import Spinner from "@/components/Spinner";
+import { FaCheckCircle } from "react-icons/fa";
 
 function RecipeDetail() {
-  let imageUrl: string = '';
+  const [loading, setLoading] = useState(true);
+  let imageUrl: string = "";
   const router = useRouter();
   const data = router.query;
 
   if (Array.isArray(data.image)) {
     // If data.image is an array, join its elements into a single string
-    imageUrl = data.image.join(',');
+    imageUrl = data.image.join(",");
   } else {
     // If data.image is not an array, use it directly
-    imageUrl = data.image || ''; // Ensure imageUrl is always a string
+    imageUrl = data.image || ""; // Ensure imageUrl is always a string
   }
 
   //to toggle ingredient availability
@@ -36,14 +39,14 @@ function RecipeDetail() {
 
         if (ingredientsLocal) {
           const ingredientsParse = JSON.parse(ingredientsLocal);
-          console.log("get Ingredients LOCAL", ingredientsParse);
+          console.log("get Ingredients LOCAL");
 
           InitialIngredientsState = ingredientsParse.map((ingredient) => ({
             name: ingredient.original,
             available: false,
             image: ingredient.image,
           }));
-
+          setLoading(false);
           setIngredients(InitialIngredientsState);
         } else {
           console.log("get Ingredients API");
@@ -56,7 +59,7 @@ function RecipeDetail() {
               image: ingredient.image,
             })
           );
-
+          setLoading(false);
           setIngredients(InitialIngredientsState);
         }
       }
@@ -65,7 +68,9 @@ function RecipeDetail() {
     getIngredient();
   }, [data]);
 
-  return (
+  return loading ? (
+    <Spinner />
+  ) : (
     <div className="text-white p-4 min-h-screen">
       <h1 className="text-2xl font-semibold">{data.title}</h1>
       <div>
@@ -116,15 +121,16 @@ function RecipeDetail() {
               <div
                 onClick={() => toggleAvailability(index)}
                 key={`${index}-${i.name}`}
-                className={`${
-                  i.available ? "bg-green-400 " : "bg-white"
-                } flex flex-col text-black font-semibold p-2 w-[10.5rem] rounded-xl mb-5 shadow-sm shadow-white`}
+                className="bg-white flex flex-col text-black font-bold p-2 w-[10.5rem] rounded-xl mb-5 shadow-sm shadow-white relative"
               >
-                <img
-                  src={`https://spoonacular.com/cdn/ingredients_100x100/${i.image}`}
-                  alt={i.name}
-                  className="max-h-[200px] object-fit"
-                />
+                <FaCheckCircle className={`${i.available? "" : "hidden"} absolute top-4 right-4 w-8 h-8 text-green-500`}/>
+                <div className="w-full h-[160px]">
+                  <img
+                    src={`https://spoonacular.com/cdn/ingredients_100x100/${i.image}`}
+                    alt={i.name}
+                    className="w-full h-full object-fit"
+                  />
+                </div>
                 <div>{i.name}</div>
               </div>
             ))}

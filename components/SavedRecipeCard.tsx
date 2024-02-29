@@ -86,6 +86,7 @@ function SavedRecipeCard({ recipe, isSaving }) {
       <img
         src={recipe.img || recipe.image}
         alt="img recipe"
+        loading="lazy"
         className="w-full h-full rounded-2xl"
       />
       <div className="font-bold text-sm mt-2">{recipe.title}</div>
