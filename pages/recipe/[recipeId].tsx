@@ -20,6 +20,12 @@ function RecipeDetail() {
     imageUrl = data.image || ""; // Ensure imageUrl is always a string
   }
 
+  useEffect(() => {
+    if(imageUrl !== ""){
+      setLoading(false);
+    }
+  }, [imageUrl])
+
   //to toggle ingredient availability
   let InitialIngredientsState = [];
 
@@ -46,7 +52,7 @@ function RecipeDetail() {
             available: false,
             image: ingredient.image,
           }));
-          setLoading(false);
+          
           setIngredients(InitialIngredientsState);
         } else {
           console.log("get Ingredients API");
@@ -59,7 +65,7 @@ function RecipeDetail() {
               image: ingredient.image,
             })
           );
-          setLoading(false);
+
           setIngredients(InitialIngredientsState);
         }
       }

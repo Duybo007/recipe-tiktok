@@ -1,5 +1,5 @@
 export const cuisines = [
-    { display: 'African', value: 'african', imgUrl: '/assets/africa.avif' },
+    { display: 'African', value: 'african', imgUrl: '/assets/africa.avif', bg: '/assets/africa-s.avif' },
     { display: 'Asian', value: 'asian',imgUrl: '/assets/asian.avif' },
     { display: 'American', value: 'american',imgUrl: '/assets/american.avif' },
     { display: 'British', value: 'british',imgUrl: '/assets/british.avif' },

@@ -25,6 +25,12 @@ function RecipeCard({ recipe, index }: any) {
     }
   }, [inView]);
 
+  useEffect(() => {
+    if(user){
+      setLoading(false)
+    }
+  },[user])
+
 
   //check if recipe has been saved or not
   useEffect(() => {
@@ -47,14 +53,12 @@ function RecipeCard({ recipe, index }: any) {
       const localRecipeDetail = localStorage.getItem(`${recipeId}`);
       if (localRecipeDetail) {
         setRecipeDetail(JSON.parse(localRecipeDetail));
-        setLoading(false)
       } else {
         const recipeDetail = await getRecipeDetail(recipeId);
 
         await localStorage.setItem(`${recipeId}`, JSON.stringify(recipeDetail));
         await localStorage.setItem(`${recipeId}-ingredients`, JSON.stringify(recipeDetail.extendedIngredients));
-        setRecipeDetail(recipeDetail);
-        setLoading(false)
+        setRecipeDetail(recipeDetail);  
       }
     };
 
