@@ -1,14 +1,14 @@
-import React, { ReactNode, useEffect, useState } from "react";
+import React, { ReactNode, useEffect } from "react";
 import BottomBar from "./BottomBar";
 import { AuthContextProvider } from "@/context/AuthContext";
 import { useRouter } from "next/router";
+import Head from 'next/head'
 
 interface LayoutProps {
   children: ReactNode;
 }
 
 export default function Layout({ children }: LayoutProps): JSX.Element {
-  const [loading, setLoading] = useState(true)
   const router = useRouter();
   
   const isMobile =
@@ -22,6 +22,10 @@ export default function Layout({ children }: LayoutProps): JSX.Element {
   }, [isMobile]);
   return (
     <AuthContextProvider>
+      <Head>
+        <title>My Recipe</title>
+        <link rel="icon" href="/recipe.png" />
+      </Head>
       <main className="bg-gradient-to-r from-black to-light-gray">
         {children}
       </main>
