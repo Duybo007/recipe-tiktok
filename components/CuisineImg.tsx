@@ -16,7 +16,6 @@ function CuisineImg({cuisine, onSelect, selectedCuisine}) {
             <img
               src={cuisine.imgUrl}
               alt="cuisine"
-              loading="lazy"
               onLoad={()=> setImgLoading(false)}
               role="presentation"
               className="w-full h-full absolute top-0 left-0 object-cover "
