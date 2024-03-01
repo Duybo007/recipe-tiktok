@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FaHeart } from "react-icons/fa";
 import { useInView } from "react-intersection-observer";
+import Spinner from "./Spinner";
 
 function RecipeCard({ recipe, index }: any) {
   const { user, setStatecurrentViewing, setStateSavedRecipes } = useAuth();
@@ -14,6 +15,7 @@ function RecipeCard({ recipe, index }: any) {
   const [recipeDetail, setRecipeDetail] = useState<any>();
   const [savedRecipe, setSavedRecipes] = useState([]);
   const [saved, setSaved] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const recipeID = doc(db, "users", `${user?.email}`);
 
@@ -45,12 +47,14 @@ function RecipeCard({ recipe, index }: any) {
       const localRecipeDetail = localStorage.getItem(`${recipeId}`);
       if (localRecipeDetail) {
         setRecipeDetail(JSON.parse(localRecipeDetail));
+        setLoading(false)
       } else {
         const recipeDetail = await getRecipeDetail(recipeId);
 
         await localStorage.setItem(`${recipeId}`, JSON.stringify(recipeDetail));
         await localStorage.setItem(`${recipeId}-ingredients`, JSON.stringify(recipeDetail.extendedIngredients));
         setRecipeDetail(recipeDetail);
+        setLoading(false)
       }
     };
 
@@ -82,6 +86,10 @@ function RecipeCard({ recipe, index }: any) {
       console.log(err);
     }
   };
+
+  if (loading) {
+    return <Spinner />;
+  }
   return (
     <div className="h-screen  snap-start relative">
       <div className="h-[40%] w-full relative">

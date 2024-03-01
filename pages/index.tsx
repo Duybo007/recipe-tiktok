@@ -1,5 +1,4 @@
 import RecipeCard from "@/components/RecipeCard";
-import Spinner from "@/components/Spinner";
 import { useAuth } from "@/context/AuthContext";
 import { db } from "@/firebase";
 import { getRecipesByCuisine } from "@/services/RecipeService";
@@ -13,7 +12,6 @@ export default function Home() {
 
   const [recipes, setRecipes] = useState([]);
   const [offset, setOffset] = useState(0);
-  const [loading, setLoading] = useState(true);
 
   const scrollToCard = (index) => {
     const cardElement = document.getElementById(`card-${index}`);
@@ -68,23 +66,18 @@ export default function Home() {
       if (localRecipes) {
         console.log("get local");
         setRecipes(JSON.parse(localRecipes));
-        setLoading(false);
       } else {
         console.log("get API");
         const recipesAPI = await getRecipesByCuisine(cuisine, offset);
         await localStorage.setItem("recipes", JSON.stringify(recipesAPI));
         setRecipes(recipesAPI);
-        setLoading(false);
       }
     };
 
     getRecipes();
   }, [cuisine]);
 
-  if (loading) {
-    return <Spinner />;
-  }
-
+  
   return (
     <main >
       <div className="snap-y snap-mandatory h-screen overflow-scroll">

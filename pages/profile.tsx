@@ -22,9 +22,16 @@ function Profile() {
             onClick={() => OnSelectCuisine(cuisine.value)}
             className={`${
               selectCuisine == cuisine.value && "border-4 border-primary"
-            }  flex justify-center items-center w-40 h-36  rounded-md text-white font-bold bg-center  relative bg-gray-600`}
+            }  flex justify-center items-center w-40 h-36  rounded-md text-white font-bold bg-center relative bg-gray-600`}
           >
-            <img src={cuisine.imgUrl} alt="" className="w-full h-full absolute top-0 left-0 object-cover"/>
+            <img
+              src={cuisine.imgUrl}
+              alt="cuisine"
+              loading="lazy"
+              fetchPriority="high"
+              role="presentation"
+              className="w-full h-full absolute top-0 left-0 object-cover"
+            />
             <div className="absolute top-0 left-0 bg-black/[0.4] w-full h-full"></div>
             <div className="z-10 text-lg">{cuisine.display}</div>
           </div>

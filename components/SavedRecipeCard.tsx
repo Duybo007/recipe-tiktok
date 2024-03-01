@@ -9,58 +9,57 @@ import { FaTrashAlt, FaHeart } from "react-icons/fa";
 function SavedRecipeCard({ recipe, isSaving }) {
   const { user, savedRecipes } = useAuth();
 
-  const [recipeDetails, setRecipeDetails] = useState()
-  const [saving, setSaving] = useState(isSaving)
+  const [recipeDetails, setRecipeDetails] = useState();
+  const [saving, setSaving] = useState(isSaving);
 
   const recipeID = doc(db, "users", `${user?.email}`);
 
-  const saveRecipe = async(event)=> {
+  const saveRecipe = async (event) => {
     event.stopPropagation();
     event.nativeEvent.preventDefault();
 
-    setSaving(false)
+    setSaving(false);
 
     await updateDoc(recipeID, {
       savedRecipes: arrayUnion({
         id: recipe.id,
         title: recipe.title,
         image: recipe.image,
-        detail: recipeDetails
-      })
-    })
-  }
+        detail: recipeDetails,
+      }),
+    });
+  };
 
-  const removeSavedRecipe = async(event) => {
+  const removeSavedRecipe = async (event) => {
     event.stopPropagation();
     event.nativeEvent.preventDefault();
 
-    setSaving(true)
+    setSaving(true);
 
-    const res = savedRecipes.filter((r: any) => r.id !== recipe.id)
+    const res = savedRecipes.filter((r: any) => r.id !== recipe.id);
 
     await updateDoc(recipeID, {
-      savedRecipes: res
-    })
-  }
+      savedRecipes: res,
+    });
+  };
 
   useEffect(() => {
-    console.log(savedRecipes)
-    const res = savedRecipes.find(({id}: any) => id === recipe.id)
-    if(res){
-      setSaving(false)
+    const res = savedRecipes.find(({ id }: any) => id === recipe.id);
+    if (res) {
+      setSaving(false);
     }
-  }, [user])
+  }, [user]);
 
-  useEffect(() => {    
-    const getRecipeDetailApi = async() => {
-      const detail = await getRecipeDetail(recipe.id)
-      setRecipeDetails(detail)
-    }
+  useEffect(() => {
+    const getRecipeDetailApi = async () => {
+      const detail = await getRecipeDetail(recipe.id);
+      setRecipeDetails(detail);
+    };
 
-    if(!recipe.detail){
-      getRecipeDetailApi()
+    if (!recipe.detail) {
+      getRecipeDetailApi();
     }
-  }, [])
+  }, []);
 
   return (
     <Link
@@ -68,7 +67,7 @@ function SavedRecipeCard({ recipe, isSaving }) {
         pathname: `recipe/${recipe.id}`,
         query: recipe.detail || recipeDetails,
       }}
-      className="w-[47%] h-full text-white mb-8 relative p-3 shadow-lg shadow-[#475370] rounded-2xl bg-light-gray"
+      className="w-[47%] min-h-[227px] text-white mb-8 relative p-3 shadow-lg shadow-[#475370] rounded-2xl bg-light-gray"
     >
       <div className="bg-light-gray/[0.5] w-8 h-8 rounded-lg flex justify-center items-center absolute top-4 right-4 ">
         {saving ? (
@@ -83,12 +82,14 @@ function SavedRecipeCard({ recipe, isSaving }) {
           />
         )}
       </div>
-      <img
-        src={recipe.img || recipe.image}
-        alt="img recipe"
-        loading="lazy"
-        className="w-full h-full rounded-2xl"
-      />
+      <div className="bg-gray-600">
+        <img
+          src={recipe.img || recipe.image}
+          alt="img recipe"
+          loading="lazy"
+          className="w-full h-full rounded-2xl"
+        />
+      </div>
       <div className="font-bold text-sm mt-2">{recipe.title}</div>
     </Link>
   );

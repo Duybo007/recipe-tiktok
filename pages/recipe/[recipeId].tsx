@@ -73,8 +73,8 @@ function RecipeDetail() {
   ) : (
     <div className="text-white p-4 min-h-screen">
       <h1 className="text-2xl font-semibold">{data.title}</h1>
-      <div>
-        <img className="rounded-3xl mt-5" src={imageUrl} alt="" />
+      <div className="w-full min-h-[252px] bg-gray-600 rounded-3xl overflow-hidden mt-5">
+        <img className="w-full h-full object-cover" src={imageUrl} alt="" />
       </div>
 
       <div className="border-b border-gray-200 dark:border-gray-700">

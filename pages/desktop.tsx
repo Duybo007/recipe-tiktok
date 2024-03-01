@@ -9,7 +9,6 @@ function Desktop() {
 
   useEffect(() => {
     if (isMobile) {
-      console.log("true");
       router.push("/");
     } else {
       setLoading(false);

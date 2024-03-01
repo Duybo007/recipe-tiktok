@@ -10,8 +10,6 @@ import { FaHeart, FaSearch } from "react-icons/fa";
 function useDebounceSearchTerm(value, time = 500) {
   const [debounceSearchTerm, setDebounceSearchTerm] = useState(value);
 
-  
-
   useEffect(() => {
     const timeout = setTimeout(() => {
       setDebounceSearchTerm(value);
