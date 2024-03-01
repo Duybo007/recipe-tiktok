@@ -15,7 +15,8 @@ function RecipeCard({ recipe, index }: any) {
   const [recipeDetail, setRecipeDetail] = useState<any>();
   const [savedRecipe, setSavedRecipes] = useState([]);
   const [saved, setSaved] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [loadingUser, setLoadingUser] = useState(true);
+  const [loadingRecipe, setLoadingRecipe] = useState(true);
 
   const recipeID = doc(db, "users", `${user?.email}`);
 
@@ -27,7 +28,7 @@ function RecipeCard({ recipe, index }: any) {
 
   useEffect(() => {
     if(user){
-      setLoading(false)
+      setLoadingUser(false)
     }
   },[user])
 
@@ -53,12 +54,14 @@ function RecipeCard({ recipe, index }: any) {
       const localRecipeDetail = localStorage.getItem(`${recipeId}`);
       if (localRecipeDetail) {
         setRecipeDetail(JSON.parse(localRecipeDetail));
+        setLoadingRecipe(false)
       } else {
         const recipeDetail = await getRecipeDetail(recipeId);
 
         await localStorage.setItem(`${recipeId}`, JSON.stringify(recipeDetail));
         await localStorage.setItem(`${recipeId}-ingredients`, JSON.stringify(recipeDetail.extendedIngredients));
-        setRecipeDetail(recipeDetail);  
+        setRecipeDetail(recipeDetail);
+        setLoadingRecipe(false)
       }
     };
 
@@ -91,7 +94,7 @@ function RecipeCard({ recipe, index }: any) {
     }
   };
 
-  if (loading) {
+  if (loadingUser || loadingRecipe) {
     return <Spinner />;
   }
   return (
