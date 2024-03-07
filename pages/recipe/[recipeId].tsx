@@ -5,8 +5,10 @@ import React, { useEffect, useState } from "react";
 import { getRecipeDetail } from "@/services/RecipeService";
 import Spinner from "@/components/Spinner";
 import { FaCheckCircle } from "react-icons/fa";
+import { useAuth } from "@/context/AuthContext";
 
 function RecipeDetail() {
+  const { pantryIngredients } = useAuth();
   const [loading, setLoading] = useState(true);
   let imageUrl: string = "";
   const router = useRouter();
@@ -21,10 +23,10 @@ function RecipeDetail() {
   }
 
   useEffect(() => {
-    if(imageUrl !== ""){
+    if (imageUrl !== "") {
       setLoading(false);
     }
-  }, [imageUrl])
+  }, [imageUrl]);
 
   //to toggle ingredient availability
   let InitialIngredientsState = [];
@@ -49,11 +51,14 @@ function RecipeDetail() {
 
           InitialIngredientsState = ingredientsParse.map((ingredient) => ({
             name: ingredient.original,
-            available: false,
-            image: ingredient.image,
+            available: pantryIngredients.some(
+              (obj) => obj.ingredient.id === ingredient.id
+            ),
+            image: ingredient.image
           }));
-          
+
           setIngredients(InitialIngredientsState);
+          console.log(ingredientsParse);
         } else {
           console.log("get Ingredients API");
           const recipeDetailApi = await getRecipeDetail(data.id);
@@ -61,8 +66,10 @@ function RecipeDetail() {
           InitialIngredientsState = recipeDetailApi.extendedIngredients.map(
             (ingredient) => ({
               name: ingredient.original,
-              available: false,
-              image: ingredient.image,
+              available: pantryIngredients.some(
+                (obj) => obj.ingredient.id === ingredient.id
+              ),
+              image: ingredient.image
             })
           );
 
@@ -72,7 +79,7 @@ function RecipeDetail() {
     };
 
     getIngredient();
-  }, [data]);
+  }, [data, pantryIngredients]);
 
   return loading ? (
     <Spinner />
@@ -129,10 +136,14 @@ function RecipeDetail() {
                 key={`${index}-${i.name}`}
                 className="bg-white flex flex-col text-black font-bold p-2 w-[10.5rem] rounded-xl mb-5 shadow-sm shadow-white relative"
               >
-                <FaCheckCircle className={`${i.available? "" : "hidden"} absolute top-4 right-4 w-8 h-8 text-green-500`}/>
+                <FaCheckCircle
+                  className={`${
+                    i.available ? "" : "hidden"
+                  } absolute top-4 right-4 w-8 h-8 text-green-500`}
+                />
                 <div className="w-full h-[160px]">
                   <img
-                    src={`https://spoonacular.com/cdn/ingredients_100x100/${i.image}`}
+                    src={`https://spoonacular.com/cdn/ingredients_500x500/${i.image}`}
                     alt={i.name}
                     className="w-full h-full object-fit"
                   />

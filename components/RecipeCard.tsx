@@ -94,7 +94,7 @@ function RecipeCard({ recipe, index }: any) {
     }
   };
 
-  if (loadingUser || loadingRecipe) {
+  if ( loadingRecipe) {
     return <Spinner />;
   }
   return (

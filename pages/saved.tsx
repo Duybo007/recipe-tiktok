@@ -66,7 +66,7 @@ function Saved() {
 
   return (
     <div className="bg-gradient-to-r from-dark to-light-gray min-h-screen pb-16 p-4">
-      <div className="sticky top-5 z-20 bg-gradient-to-r from-dark to-light-gray">
+      <div className=" bg-gradient-to-r from-dark to-light-gray">
         <div className="flex gap-2 items-center">
           <FaHeart className="text-white" />
           {savedRecipesFilter && (

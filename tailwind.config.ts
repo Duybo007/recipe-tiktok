@@ -18,6 +18,8 @@ const config: Config = {
         "light-gray": "#282828",
         "text": "#B0B3B7",
         "dark": "#171D2B",
+        "gray": "#F1F1F1",
+        "light-primary": "#FFD0A5"
       }
     },
   },

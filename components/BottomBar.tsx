@@ -5,34 +5,26 @@ import { RiLoginCircleFill, RiLogoutCircleFill } from "react-icons/ri";
 import Spinner from "./Spinner";
 import { useRouter } from "next/router";
 
-function BottomBar() {
-  const { user, googleSignIn, logOut } = useAuth();
+function BottomBar({ openModal }) {
+  const { user, googleSignIn } = useAuth();
   const router = useRouter();
 
   const [loading, setLoading] = useState(true);
   const [showBottomBar, setShowBottomBar] = useState(true);
 
-  useEffect(()=>{
-    if(!isMobile()){
-      setShowBottomBar(false)
+  useEffect(() => {
+    if (!isMobile()) {
+      setShowBottomBar(false);
     }
-  }, [])
+  }, []);
 
   const isMobile = () => {
-    return navigator.maxTouchPoints > 0
-  }
+    return navigator.maxTouchPoints > 0;
+  };
 
   const handleSignIn = async () => {
     try {
       await googleSignIn();
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const handleSignOut = async () => {
-    try {
-      await logOut();
     } catch (error) {
       console.log(error);
     }
@@ -47,7 +39,11 @@ function BottomBar() {
   }, [user]);
 
   return (
-    <div className={`${!showBottomBar && "hidden"} fixed z-50 w-[96%] h-16 max-w-lg -translate-x-1/2 bg-white border border-gray-200 rounded-full bottom-4 left-1/2 dark:bg-gray-700 dark:border-gray-600`}>
+    <div
+      className={`${
+        !showBottomBar && "hidden"
+      } fixed z-50 w-[96%] h-16 max-w-lg -translate-x-1/2 bg-white border border-gray-200 rounded-full bottom-4 left-1/2 dark:bg-gray-700 dark:border-gray-600`}
+    >
       <div className="grid h-full max-w-lg grid-cols-5 mx-auto">
         <button
           onClick={() => router.push("/")}
@@ -77,36 +73,46 @@ function BottomBar() {
         >
           <FaSearch className="w-5 h-5 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-primary dark:group-hover:text-primary" />
         </button>
-        {!user && (
-          <div></div>
-        )}
+        <div onClick={openModal} className="flex items-center justify-center">
+          <button
+            data-tooltip-target="tooltip-new"
+            type="button"
+            className="inline-flex items-center justify-center w-10 h-10 font-medium bg-primary rounded-full hover:bg-light-primary group focus:ring-4 focus:ring-blue-300 focus:outline-none dark:focus:ring-blue-800"
+          >
+            <svg
+              className="w-4 h-4 text-white"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 18 18"
+            >
+              <path
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M9 1v16M1 9h16"
+              />
+            </svg>
+          </button>
+        </div>
         {loading ? (
           <Spinner />
         ) : user ? (
-          <>
-            <button
-              onClick={handleSignOut}
-              data-tooltip-target="tooltip-profile"
-              type="button"
-              className="inline-flex flex-col items-center justify-center px-5 rounded-e-full hover:bg-gray-50 dark:hover:bg-gray-800 group"
-            >
-              <RiLogoutCircleFill className="w-5 h-5 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500" />
-            </button>
-            <button
-              onClick={() => router.push("/saved")}
-              data-tooltip-target="tooltip-settings"
-              type="button"
-              className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
-            >
-              <FaHeart
-                className={`w-5 h-5 mb-1 ${
-                  router.pathname === "/saved"
-                    ? "text-primary text-primary"
-                    : "text-gray-500 text-gray-400"
-                } `}
-              />
-            </button>
-          </>
+          <button
+            onClick={() => router.push("/saved")}
+            data-tooltip-target="tooltip-settings"
+            type="button"
+            className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
+          >
+            <FaHeart
+              className={`w-5 h-5 mb-1 ${
+                router.pathname === "/saved"
+                  ? "text-primary text-primary"
+                  : "text-gray-500 text-gray-400"
+              } `}
+            />
+          </button>
         ) : (
           <button
             onClick={handleSignIn}

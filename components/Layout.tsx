@@ -1,14 +1,16 @@
-import React, { ReactNode, useEffect } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import BottomBar from "./BottomBar";
 import { AuthContextProvider } from "@/context/AuthContext";
 import { useRouter } from "next/router";
 import Head from 'next/head'
+import IngredientsModal from "./IngredientsModal";
 
 interface LayoutProps {
   children: ReactNode;
 }
 
 export default function Layout({ children }: LayoutProps): JSX.Element {
+  const [openModal, setOpenModal] = useState(false)
   const router = useRouter();
   
   const isMobile =
@@ -29,7 +31,8 @@ export default function Layout({ children }: LayoutProps): JSX.Element {
       <main className="bg-gradient-to-r from-black to-light-gray">
         {children}
       </main>
-      <BottomBar />
+      <IngredientsModal open={openModal} onClose={() => setOpenModal(false)}/>
+      <BottomBar openModal={() => setOpenModal(true)}/>
     </AuthContextProvider>
   );
 }

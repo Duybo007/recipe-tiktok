@@ -24,12 +24,15 @@ const AuthContext = createContext({
   setStatecurrentViewing: (index: any) => {},
   savedRecipes: [],
   setStateSavedRecipes: (index: any) => {},
+  pantryIngredients: [],
+  setStatePantryIngredients: (ingredients: any) => {}
 });
 
 export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<FirebaseUser>();
   const [currentViewing, setCurrentViewing] = useState(0);
   const [savedRecipes, setSavedRecipes] = useState([]);
+  const [pantryIngredients, setPantryIngredients] = useState([]);
   const [cuisine, setCuisine] = useState("vietnamese");
 
   const googleSignIn = () => {
@@ -53,6 +56,10 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     setSavedRecipes(recipes)
   }
 
+  const setStatePantryIngredients = (ingredients) =>{
+    setPantryIngredients(ingredients)
+  }
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
@@ -69,7 +76,9 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     setStatecurrentViewing,
     currentViewing,
     savedRecipes,
-    setStateSavedRecipes
+    setStateSavedRecipes,
+    pantryIngredients,
+    setStatePantryIngredients
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
