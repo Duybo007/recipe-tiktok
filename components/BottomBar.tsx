@@ -1,9 +1,10 @@
 import { useAuth } from "@/context/AuthContext";
 import { useEffect, useState } from "react";
 import { FaHeart, FaSearch } from "react-icons/fa";
-import { RiLoginCircleFill, RiLogoutCircleFill } from "react-icons/ri";
+import { RiLoginCircleFill } from "react-icons/ri";
 import Spinner from "./Spinner";
 import { useRouter } from "next/router";
+import { isMobile } from "react-device-detect";
 
 function BottomBar({ openModal }) {
   const { user, googleSignIn } = useAuth();
@@ -13,14 +14,11 @@ function BottomBar({ openModal }) {
   const [showBottomBar, setShowBottomBar] = useState(true);
 
   useEffect(() => {
-    if (!isMobile()) {
+    if (!isMobile) {
       setShowBottomBar(false);
     }
   }, []);
 
-  const isMobile = () => {
-    return navigator.maxTouchPoints > 0;
-  };
 
   const handleSignIn = async () => {
     try {
