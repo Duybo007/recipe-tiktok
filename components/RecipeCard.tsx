@@ -100,7 +100,7 @@ function RecipeCard({ recipe, index }: any) {
   return (
     <div className="h-screen  snap-start relative">
       <div className="h-[40%] w-full relative">
-        <img className="w-full h-full object-cover" src={recipe.image} alt="" />
+        <img className="w-full h-full object-cover" src={`https://spoonacular.com/recipeImages/${recipe.id}-636x393.${recipe.imageType}`} alt="" />
         {user && (
           <div
             className={`flex justify-center items-center absolute top-8 right-5 w-12 h-12 rounded-full border-4 ${

@@ -67,7 +67,7 @@ function SavedRecipeCard({ recipe, isSaving }) {
         pathname: `recipe/${recipe.id}`,
         query: recipe.detail || recipeDetails,
       }}
-      className="w-[47%] min-h-[227px] text-white mb-8 relative p-3 shadow-lg shadow-[#475370] rounded-2xl bg-light-gray"
+      className="w-[47%] min-h-[210px] text-white mb-8 relative p-3 shadow-lg shadow-[#475370] rounded-2xl bg-dark"
     >
       <div className="bg-light-gray/[0.5] w-8 h-8 rounded-lg flex justify-center items-center absolute top-4 right-4 ">
         {saving ? (
