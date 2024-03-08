@@ -54,11 +54,13 @@ function RecipeDetail() {
             available: pantryIngredients.some(
               (obj) => obj.ingredient.id === ingredient.id
             ),
-            image: ingredient.image
+            image: ingredient.image,
+            inPantry: pantryIngredients.some(
+              (obj) => obj.ingredient.id === ingredient.id
+            ),
           }));
 
           setIngredients(InitialIngredientsState);
-          console.log(ingredientsParse);
         } else {
           console.log("get Ingredients API");
           const recipeDetailApi = await getRecipeDetail(data.id);
@@ -69,7 +71,10 @@ function RecipeDetail() {
               available: pantryIngredients.some(
                 (obj) => obj.ingredient.id === ingredient.id
               ),
-              image: ingredient.image
+              image: ingredient.image,
+              inPantry: pantryIngredients.some(
+                (obj) => obj.ingredient.id === ingredient.id
+              ),
             })
           );
 
@@ -140,6 +145,10 @@ function RecipeDetail() {
                   className={`${
                     i.available ? "" : "hidden"
                   } absolute top-4 right-4 w-8 h-8 text-green-500`}
+                />
+                <img
+                  src={"/assets/groceries.svg"}
+                  className={`${i.inPantry? "" : "hidden"} w-8 h-8 absolute left-4 top-4`}
                 />
                 <div className="w-full h-[160px]">
                   <img
