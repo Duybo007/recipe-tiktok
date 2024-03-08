@@ -83,7 +83,9 @@ function RecipeDetail() {
       }
     };
 
-    getIngredient();
+    if (pantryIngredients) {
+      getIngredient();
+    }
   }, [data, pantryIngredients]);
 
   return loading ? (
@@ -148,7 +150,9 @@ function RecipeDetail() {
                 />
                 <img
                   src={"/assets/groceries.svg"}
-                  className={`${i.inPantry? "" : "hidden"} w-8 h-8 absolute left-4 top-4`}
+                  className={`${
+                    i.inPantry ? "" : "hidden"
+                  } w-8 h-8 absolute left-4 top-4`}
                 />
                 <div className="w-full h-[160px]">
                   <img
