@@ -2,13 +2,14 @@ import { useAuth } from "@/context/AuthContext";
 import { db } from "@/firebase";
 import { getRecipeDetail } from "@/services/RecipeService";
 import { arrayUnion, doc, updateDoc } from "firebase/firestore";
-import { Reorder } from "framer-motion";
+import { Reorder, useDragControls } from "framer-motion";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FaTrashAlt, FaHeart } from "react-icons/fa";
 import { MdOutlineDragIndicator } from "react-icons/md";
 
 function SavedRecipeCard({ recipe, isSaving }) {
+  const dragControls = useDragControls();
   const { user, savedRecipes } = useAuth();
 
   const [recipeDetails, setRecipeDetails] = useState();
@@ -67,6 +68,8 @@ function SavedRecipeCard({ recipe, isSaving }) {
     <Reorder.Item
       value={recipe}
       key={recipe.id}
+      dragListener={false}
+      dragControls={dragControls}
     >
       <Link
         href={{
@@ -88,8 +91,13 @@ function SavedRecipeCard({ recipe, isSaving }) {
             />
           )}
         </div>
-        <div className="absolute bottom-5 right-5" >
-          <MdOutlineDragIndicator className="w-8 h-8"/>
+        <div
+          className="absolute bottom-5 right-5 z-50"
+          onPointerDown={(event) => {
+            dragControls.start(event);
+          }}
+        >
+          <MdOutlineDragIndicator className="w-8 h-8" />
         </div>
         <div className="bg-gray-600">
           <img

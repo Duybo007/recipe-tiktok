@@ -100,6 +100,7 @@ function Saved() {
             setSavedRecipesFilter(e);
             saveRecipesReorder(e);
           }}
+          axis="y"
           layoutScroll
         >
           {savedRecipesFilter &&
