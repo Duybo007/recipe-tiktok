@@ -6,7 +6,6 @@ import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 function Pantry({ openTab, setOpenTab }) {
   const { pantryIngredients, user } = useAuth();
   const recipeID = doc(db, "users", `${user?.email}`);
-  console.log(pantryIngredients);
 
   const removeIngredient = async (ingredient) => {
     const filteredIngredients = pantryIngredients.filter(

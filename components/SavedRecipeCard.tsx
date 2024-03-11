@@ -2,9 +2,11 @@ import { useAuth } from "@/context/AuthContext";
 import { db } from "@/firebase";
 import { getRecipeDetail } from "@/services/RecipeService";
 import { arrayUnion, doc, updateDoc } from "firebase/firestore";
+import { Reorder } from "framer-motion";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FaTrashAlt, FaHeart } from "react-icons/fa";
+import { MdOutlineDragIndicator } from "react-icons/md";
 
 function SavedRecipeCard({ recipe, isSaving }) {
   const { user, savedRecipes } = useAuth();
@@ -62,36 +64,44 @@ function SavedRecipeCard({ recipe, isSaving }) {
   }, []);
 
   return (
-    <Link
-      href={{
-        pathname: `recipe/${recipe.id}`,
-        query: recipe.detail || recipeDetails,
-      }}
-      className="w-[47%] min-h-[210px] text-white mb-8 relative p-3 shadow-lg shadow-[#475370] rounded-2xl bg-dark"
+    <Reorder.Item
+      value={recipe}
+      key={recipe.id}
     >
-      <div className="bg-light-gray/[0.5] w-8 h-8 rounded-lg flex justify-center items-center absolute top-4 right-4 ">
-        {saving ? (
-          <FaHeart
-            className="text-white w-5 h-5"
-            onClick={(event) => saveRecipe(event)}
+      <Link
+        href={{
+          pathname: `recipe/${recipe.id}`,
+          query: recipe.detail || recipeDetails,
+        }}
+        className="w-full flex flex-col text-white mb-8 relative p-8 shadow-lg shadow-[#475370] rounded-2xl bg-dark"
+      >
+        <div className="bg-light-gray/[0.5] w-8 h-8 rounded-lg flex justify-center items-center absolute top-10 right-10 ">
+          {saving ? (
+            <FaHeart
+              className="text-white w-5 h-5"
+              onClick={(event) => saveRecipe(event)}
+            />
+          ) : (
+            <FaTrashAlt
+              onClick={(event) => removeSavedRecipe(event)}
+              className="text-red-600 w-5 h-5"
+            />
+          )}
+        </div>
+        <div className="absolute bottom-5 right-5" >
+          <MdOutlineDragIndicator className="w-8 h-8"/>
+        </div>
+        <div className="bg-gray-600">
+          <img
+            src={recipe.img || recipe.image}
+            alt="img recipe"
+            loading="lazy"
+            className="w-full h-full rounded-2xl"
           />
-        ) : (
-          <FaTrashAlt
-            onClick={(event) => removeSavedRecipe(event)}
-            className="text-red-600 w-5 h-5"
-          />
-        )}
-      </div>
-      <div className="bg-gray-600">
-        <img
-          src={recipe.img || recipe.image}
-          alt="img recipe"
-          loading="lazy"
-          className="w-full h-full rounded-2xl"
-        />
-      </div>
-      <div className="font-bold text-sm mt-2">{recipe.title}</div>
-    </Link>
+        </div>
+        <div className="font-bold text-base mt-2">{recipe.title}</div>
+      </Link>
+    </Reorder.Item>
   );
 }
 

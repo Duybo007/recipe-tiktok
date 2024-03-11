@@ -11,6 +11,7 @@ function IngredientsModal({ open, onClose }) {
   const [suggestIngredients, setSuggestIngredients] = useState<any>([]);
   const [selectedIngredients, setSelectedIngredients] = useState([]);
   const [ingredientsPantry, setIngredientsPantry] = useState([]);
+  const [offset, setOffset] = useState(0);
 
   const recipeID = doc(db, "users", `${user?.email}`);
 

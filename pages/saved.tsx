@@ -3,6 +3,7 @@ import Spinner from "@/components/Spinner";
 import { useAuth } from "@/context/AuthContext";
 import { db } from "@/firebase";
 import { doc, onSnapshot, updateDoc } from "firebase/firestore";
+import { Reorder } from "framer-motion";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { FaHeart, FaSearch } from "react-icons/fa";
@@ -30,13 +31,15 @@ function Saved() {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const debounce = useDebounceSearchTerm(searchTerm);
-  const router = useRouter()
+  const router = useRouter();
+
+  const recipeID = doc(db, "users", `${user?.email}`);
 
   useEffect(() => {
-    if(!user){
-      router.push('/')
+    if (!user) {
+      router.push("/");
     }
-  }, [user])
+  }, [user]);
 
   useEffect(() => {
     if (debounce === "") {
@@ -59,6 +62,11 @@ function Saved() {
     });
   }, [user]);
 
+  const saveRecipesReorder = async (recipes) => {
+    await updateDoc(recipeID, {
+      savedRecipes: recipes,
+    });
+  };
 
   if (loading) {
     return <Spinner />;
@@ -86,14 +94,23 @@ function Saved() {
         </div>
       </div>
       <div className="flex justify-between gap-2 flex-wrap mt-4">
-        {savedRecipesFilter &&
-          savedRecipesFilter.map((recipe: any) => (
-            <SavedRecipeCard
-              recipe={recipe}
-              key={`${recipe.title}-${recipe.id}`}
-              isSaving={false}
-            />
-          ))}
+        <Reorder.Group
+          values={savedRecipesFilter}
+          onReorder={(e) => {
+            setSavedRecipesFilter(e);
+            saveRecipesReorder(e);
+          }}
+          layoutScroll
+        >
+          {savedRecipesFilter &&
+            savedRecipesFilter.map((recipe: any) => (
+              <SavedRecipeCard
+                recipe={recipe}
+                key={`${recipe.title}-${recipe.id}`}
+                isSaving={false}
+              />
+            ))}
+        </Reorder.Group>
       </div>
     </div>
   );
