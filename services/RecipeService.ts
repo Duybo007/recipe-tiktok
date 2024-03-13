@@ -2,29 +2,29 @@ import axios from "axios";
 
 const baseUrl = "https://api.spoonacular.com/recipes"
 
-export const getSearchRecipes = async(searchTerm) => {
+export const getSearchRecipes = async(searchTerm, offset) => {
     try {
-        const recipes = await axios.get(`${baseUrl}/complexSearch?apiKey=${process.env.NEXT_PUBLIC_spoonacularApiKey1}&number=8&query=${searchTerm}`)
+        const recipes = await axios.get(`${baseUrl}/complexSearch?apiKey=${process.env.NEXT_PUBLIC_spoonacularApiKey1}&number=8&query=${searchTerm}&offset=${offset}`)
 
         return recipes.data.results
     } catch (error) {
         try {
-            const recipes = await axios.get(`${baseUrl}/complexSearch?apiKey=${process.env.NEXT_PUBLIC_spoonacularApiKey2}&number=8&query=${searchTerm}`)
+            const recipes = await axios.get(`${baseUrl}/complexSearch?apiKey=${process.env.NEXT_PUBLIC_spoonacularApiKey2}&number=8&query=${searchTerm}&offset=${offset}`)
     
             return recipes.data.results
         } catch (error) {
             try {
-                const recipes = await axios.get(`${baseUrl}/complexSearch?apiKey=${process.env.NEXT_PUBLIC_spoonacularApiKey3}&number=8&query=${searchTerm}`)
+                const recipes = await axios.get(`${baseUrl}/complexSearch?apiKey=${process.env.NEXT_PUBLIC_spoonacularApiKey3}&number=8&query=${searchTerm}&offset=${offset}`)
         
                 return recipes.data.results
             } catch (error) {
                 try {
-                    const recipes = await axios.get(`${baseUrl}/complexSearch?apiKey=${process.env.NEXT_PUBLIC_spoonacularApiKey4}&number=8&query=${searchTerm}`)
+                    const recipes = await axios.get(`${baseUrl}/complexSearch?apiKey=${process.env.NEXT_PUBLIC_spoonacularApiKey4}&number=8&query=${searchTerm}&offset=${offset}`)
             
                     return recipes.data.results
                 } catch (error) {
                     try {
-                        const recipes = await axios.get(`${baseUrl}/complexSearch?apiKey=${process.env.NEXT_PUBLIC_spoonacularApiKey5}&number=8&query=${searchTerm}`)
+                        const recipes = await axios.get(`${baseUrl}/complexSearch?apiKey=${process.env.NEXT_PUBLIC_spoonacularApiKey5}&number=8&query=${searchTerm}&offset=${offset}`)
                 
                         return recipes.data.results
                     } catch (error) {
@@ -115,25 +115,25 @@ export const getRecipeDetail = async(id: string | string[]) => {
     }
 }
 
-export const searchIngredients = async(ingredient: string) => {
+export const searchIngredients = async(ingredient: string, offset: number) => {
     try {
-        const ingredients = await axios.get(`https://api.spoonacular.com/food/ingredients/search?apiKey=${process.env.NEXT_PUBLIC_spoonacularApiKey1}&query=${ingredient}&number=30&sortDirection=asc`)
+        const ingredients = await axios.get(`https://api.spoonacular.com/food/ingredients/search?apiKey=${process.env.NEXT_PUBLIC_spoonacularApiKey1}&query=${ingredient}&number=30&sortDirection=asc&offset=${offset}`)
         return ingredients.data
     } catch (error) {
         try {
-            const ingredients = await axios.get(`https://api.spoonacular.com/food/ingredients/search?apiKey=${process.env.NEXT_PUBLIC_spoonacularApiKey2}&query=${ingredient}&number=30&sortDirection=asc`)
+            const ingredients = await axios.get(`https://api.spoonacular.com/food/ingredients/search?apiKey=${process.env.NEXT_PUBLIC_spoonacularApiKey2}&query=${ingredient}&number=30&sortDirection=asc&offset=${offset}`)
             return ingredients.data
         } catch (error) {
             try {
-                const ingredients = await axios.get(`https://api.spoonacular.com/food/ingredients/search?apiKey=${process.env.NEXT_PUBLIC_spoonacularApiKey3}&query=${ingredient}&number=30&sortDirection=asc`)
+                const ingredients = await axios.get(`https://api.spoonacular.com/food/ingredients/search?apiKey=${process.env.NEXT_PUBLIC_spoonacularApiKey3}&query=${ingredient}&number=30&sortDirection=asc&offset=${offset}`)
                 return ingredients.data
             } catch (error) {
                 try {
-                    const ingredients = await axios.get(`https://api.spoonacular.com/food/ingredients/search?apiKey=${process.env.NEXT_PUBLIC_spoonacularApiKey4}&query=${ingredient}&number=30&sortDirection=asc`)
+                    const ingredients = await axios.get(`https://api.spoonacular.com/food/ingredients/search?apiKey=${process.env.NEXT_PUBLIC_spoonacularApiKey4}&query=${ingredient}&number=30&sortDirection=asc&offset=${offset}`)
                     return ingredients.data
                 } catch (error) {
                     try {
-                        const ingredients = await axios.get(`https://api.spoonacular.com/food/ingredients/search?apiKey=${process.env.NEXT_PUBLIC_spoonacularApiKey5}&query=${ingredient}&number=30&sortDirection=asc`)
+                        const ingredients = await axios.get(`https://api.spoonacular.com/food/ingredients/search?apiKey=${process.env.NEXT_PUBLIC_spoonacularApiKey5}&query=${ingredient}&number=30&sortDirection=asc&offset=${offset}`)
                         return ingredients.data
                     } catch (error) {
                         console.log("Out of points")

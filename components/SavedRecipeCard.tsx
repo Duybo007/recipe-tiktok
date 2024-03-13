@@ -1,15 +1,13 @@
-import { useAuth } from "@/context/AuthContext";
+import { AuthContextProvider, useAuth } from "@/context/AuthContext";
 import { db } from "@/firebase";
 import { getRecipeDetail } from "@/services/RecipeService";
 import { arrayUnion, doc, updateDoc } from "firebase/firestore";
-import { Reorder, useDragControls } from "framer-motion";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FaTrashAlt, FaHeart } from "react-icons/fa";
-import { MdOutlineDragIndicator } from "react-icons/md";
+import { motion } from "framer-motion";
 
 function SavedRecipeCard({ recipe, isSaving }) {
-  const dragControls = useDragControls();
   const { user, savedRecipes } = useAuth();
 
   const [recipeDetails, setRecipeDetails] = useState();
@@ -65,18 +63,32 @@ function SavedRecipeCard({ recipe, isSaving }) {
   }, []);
 
   return (
-    <Reorder.Item
-      value={recipe}
+    <motion.div
+      initial={{ height: 0, opacity: 0 }}
+      animate={{
+        height: "auto",
+        opacity: 1,
+        transition: {
+          type: "spring",
+          bounce: 0.3,
+          opacity: { delay: 0.03 },
+        },
+      }}
+      exit={{ height: 0, opacity: 0 }}
+      transition={{
+        duration: 0.3,
+        type: "spring",
+        bounce: 0,
+        opacity: { duration: 0.4 },
+      }}
       key={recipe.id}
-      dragListener={false}
-      dragControls={dragControls}
     >
       <Link
         href={{
           pathname: `recipe/${recipe.id}`,
           query: recipe.detail || recipeDetails,
         }}
-        className="w-full flex flex-col text-white mb-8 relative p-8 shadow-lg shadow-[#475370] rounded-2xl bg-dark"
+        className="w-full flex flex-col text-white mb-10 relative p-8 shadow-lg shadow-[#475370] rounded-2xl bg-dark"
       >
         <div className="bg-light-gray/[0.5] w-8 h-8 rounded-lg flex justify-center items-center absolute top-10 right-10 ">
           {saving ? (
@@ -91,14 +103,6 @@ function SavedRecipeCard({ recipe, isSaving }) {
             />
           )}
         </div>
-        <div
-          className="absolute bottom-5 right-5 z-50"
-          onPointerDown={(event) => {
-            dragControls.start(event);
-          }}
-        >
-          <MdOutlineDragIndicator className="w-8 h-8" />
-        </div>
         <div className="bg-gray-600">
           <img
             src={recipe.img || recipe.image}
@@ -109,7 +113,7 @@ function SavedRecipeCard({ recipe, isSaving }) {
         </div>
         <div className="font-bold text-base mt-2">{recipe.title}</div>
       </Link>
-    </Reorder.Item>
+    </motion.div>
   );
 }
 

@@ -32,7 +32,7 @@ function IngredientsModal({ open, onClose }) {
 
   const searchIngredientsApi = async (e) => {
     if (e.key == "Enter") {
-      const ingredientsApi = await searchIngredients(searchTerm);
+      const ingredientsApi = await searchIngredients(searchTerm, offset);
 
       setSuggestIngredients(ingredientsApi.results);
     }
@@ -57,6 +57,13 @@ function IngredientsModal({ open, onClose }) {
 
     setSelectedIngredients([]);
   };
+
+  const onSeeMore = async() =>{
+    const newOffset = offset + 30;
+    setOffset((prevOffset) => prevOffset + 30);
+    const ingredientsApi = await searchIngredients(searchTerm, newOffset)
+    setSuggestIngredients((prevState) => [...prevState, ...ingredientsApi.results])
+  }
 
   //   const onSearch = async (e) => {
   //     if (e.key == "Enter") {
@@ -140,6 +147,9 @@ function IngredientsModal({ open, onClose }) {
                   </div>
                 </div>
               ))}
+              {suggestIngredients.length > 0 && (
+                <div className="text-center font-bold pb-2" onClick={onSeeMore}>+ See More</div>
+              )}
             </div>
           </div>
         </div>
